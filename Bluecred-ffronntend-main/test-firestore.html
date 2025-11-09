@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueCred | Firestore Test Page</title>
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(to bottom, #E0F8FF, #E4FFEF);
+    }
+    .test-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .status {
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    .success { background: #DCFCE7; color: #166534; }
+    .error { background: #FEE2E2; color: #991B1B; }
+    .info { background: #DBEAFE; color: #1E40AF; }
+    button {
+      background: linear-gradient(to right, #2563EB, #22C55E);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 5px;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
+    pre {
+      background: #F3F4F6;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-card">
+    <h1>🔥 Firestore Connection Test</h1>
+    <p>Use this page to test if Firebase Firestore is properly configured and working.</p>
+    
+    <div id="status"></div>
+    
+    <h2>Test Actions:</h2>
+    <button onclick="testConnection()">1. Test Firebase Connection</button>
+    <button onclick="testAuth()">2. Test Authentication</button>
+    <button onclick="testFirestore()">3. Test Firestore Write</button>
+    <button onclick="testFirestoreRead()">4. Test Firestore Read</button>
+    <button onclick="viewAllData()">5. View All Data</button>
+    
+    <div id="results"></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script>
+    let auth, db;
+    
+    function showStatus(message, type = 'info') {
+      const statusDiv = document.getElementById('status');
+      statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+    }
+    
+    function addResult(title, data) {
+      const resultsDiv = document.getElementById('results');
+      const resultCard = document.createElement('div');
+      resultCard.className = 'test-card';
+      resultCard.innerHTML = `
+        <h3>${title}</h3>
+        <pre>${JSON.stringify(data, null, 2)}</pre>
+      `;
+      resultsDiv.appendChild(resultCard);
+    }
+    
+    function clearResults() {
+      document.getElementById('results').innerHTML = '';
+    }
+    
+    async function testConnection() {
+      clearResults();
+      showStatus('Testing Firebase connection...', 'info');
+      
+      try {
+        const config = window.firebaseConfig || firebaseConfig;
+        
+        if (!config || config.apiKey === "YOUR_API_KEY_HERE") {
+          showStatus('❌ Firebase not configured! Please set up firebase-config.js', 'error');
+          addResult('Configuration Check', { error: 'Firebase config missing or not set' });
+          return;
+        }
+        
+        if (!firebase.apps.length) {
+          firebase.initializeApp(config);
+        }
+        
+        auth = firebase.auth();
+        db = firebase.firestore();
+        
+        showStatus('✅ Firebase connected successfully!', 'success');
+        addResult('Connection Test', {
+          status: 'success',
+          firebaseInitialized: true,
+          authAvailable: !!auth,
+          firestoreAvailable: !!db,
+          projectId: config.projectId
+        });
+      } catch (error) {
+        showStatus('❌ Connection failed: ' + error.message, 'error');
+        addResult('Connection Error', { error: error.message, stack: error.stack });
+      }
+    }
+    
+    async function testAuth() {
+      if (!auth) {
+        showStatus('⚠️ Please run "Test Firebase Connection" first', 'error');
+        return;
+      }
+      
+      clearResults();
+      showStatus('Testing Authentication...', 'info');
+      
+      try {
+        const currentUser = auth.currentUser;
+        
+        if (currentUser) {
+          showStatus('✅ User is authenticated: ' + currentUser.email, 'success');
+          addResult('Current User', {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            emailVerified: currentUser.emailVerified,
+            displayName: currentUser.displayName
+          });
+        } else {
+          showStatus('ℹ️ No user currently authenticated. Sign up or login first.', 'info');
+          addResult('Authentication Status', { authenticated: false, message: 'No user logged in' });
+        }
+      } catch (error) {
+        showStatus('❌ Auth test failed: ' + error.message, 'error');
+        addResult('Auth Error', { error: error.message });
+      }
+    }
+    
+    async function testFirestore() {
+      if (!db) {
+        showStatus('⚠️ Please run "Test Firebase Connection" first', 'error');
+        return;
+      }
+      
+      clearResults();
+      showStatus('Testing Firestore write...', 'info');
+      
+      try {
+        const testData = {
+          testField: 'Hello Firestore!',
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          testNumber: 123,
+          testBoolean: true
+        };
+        
+        const docRef = await db.collection('test').add(testData);
+        
+        showStatus('✅ Data written successfully! Document ID: ' + docRef.id, 'success');
+        addResult('Write Test', {
+          status: 'success',
+          collection: 'test',
+          documentId: docRef.id,
+          data: { ...testData, timestamp: 'serverTimestamp()' }
+        });
+        
+        // Also check in console
+        console.log('✅ Test data written to Firestore:');
+        console.log('   Collection: test');
+        console.log('   Document ID:', docRef.id);
+        console.log('📝 Check Firebase Console > Firestore Database > test collection');
+      } catch (error) {
+        showStatus('❌ Write failed: ' + error.message, 'error');
+        addResult('Write Error', { error: error.message, code: error.code });
+      }
+    }
+    
+    async function testFirestoreRead() {
+      if (!db) {
+        showStatus('⚠️ Please run "Test Firebase Connection" first', 'error');
+        return;
+      }
+      
+      clearResults();
+      showStatus('Testing Firestore read...', 'info');
+      
+      try {
+        // Read from users collection
+        const usersSnapshot = await db.collection('users').limit(5).get();
+        const users = [];
+        usersSnapshot.forEach(doc => {
+          users.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Read from sessions collection
+        const sessionsSnapshot = await db.collection('sessions').limit(5).get();
+        const sessions = [];
+        sessionsSnapshot.forEach(doc => {
+          sessions.push({ id: doc.id, ...doc.data() });
+        });
+        
+        showStatus('✅ Data read successfully!', 'success');
+        addResult('Read Test - Users Collection', {
+          count: users.length,
+          users: users
+        });
+        
+        addResult('Read Test - Sessions Collection', {
+          count: sessions.length,
+          sessions: sessions
+        });
+      } catch (error) {
+        showStatus('❌ Read failed: ' + error.message, 'error');
+        addResult('Read Error', { error: error.message, code: error.code });
+      }
+    }
+    
+    async function viewAllData() {
+      if (!db) {
+        showStatus('⚠️ Please run "Test Firebase Connection" first', 'error');
+        return;
+      }
+      
+      clearResults();
+      showStatus('Fetching all data...', 'info');
+      
+      try {
+        const collections = ['users', 'sessions', 'test'];
+        const allData = {};
+        
+        for (const collectionName of collections) {
+          try {
+            const snapshot = await db.collection(collectionName).limit(10).get();
+            const docs = [];
+            snapshot.forEach(doc => {
+              const data = doc.data();
+              // Convert timestamps to readable format
+              Object.keys(data).forEach(key => {
+                if (data[key] && data[key].toDate) {
+                  data[key] = data[key].toDate().toISOString();
+                }
+              });
+              docs.push({ id: doc.id, ...data });
+            });
+            allData[collectionName] = docs;
+          } catch (err) {
+            allData[collectionName] = { error: err.message };
+          }
+        }
+        
+        showStatus('✅ All data retrieved!', 'success');
+        addResult('All Collections Data', allData);
+        
+        console.log('📊 All Firestore Data:', allData);
+      } catch (error) {
+        showStatus('❌ Failed: ' + error.message, 'error');
+        addResult('Error', { error: error.message });
+      }
+    }
+    
+    // Auto-test on load
+    window.addEventListener('DOMContentLoaded', () => {
+      showStatus('👆 Click "Test Firebase Connection" to begin', 'info');
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,226 @@
+/* ==============================
+   🌊 BlueCred Global Styles
+   ============================== */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Base */
+body {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  line-height: 1.6;
+  color: #0F172A;
+  background-color: #FFFFFF;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* ==============================
+   🌿 Animations
+   ============================== */
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+
+/* ==============================
+   💎 Utility & Effects
+   ============================== */
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hover-grow {
+  transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
+  transform: scale(1.03);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+/* ==============================
+   🌊 Decorative Backgrounds
+   ============================== */
+
+.wave-pattern {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48cGF0aCBkPSJNMCwwTDUwLDQwQzEwMCw4MCwyMDAsMCwzMDAsNDBDNDAwLDgwLDUwMCwwLDYwMCw0MEM3MDAsODAsODAwLDAsOTAwLDQwQzEwMDAsODAsMTEwMCwwLDEyMDAsNDBMMTIwMCw4MEwwLDgweiIiIGZpbGw9IiNFRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+');
+  background-size: 1200px 80px;
+  opacity: 0.1;
+}
+
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* ==============================
+   ✨ Transitions
+   ============================== */
+
+.transition-all {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ==============================
+   🌈 Scrollbar & Selection
+   ============================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 241, 241, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#0F2C3D, #22C55E);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#22C55E, #0F2C3D);
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.2);
+  color: #0F2C3D;
+}
+
+/* ==============================
+   📱 Responsive Layouts
+   ============================== */
+
+@media (max-width: 1024px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+
+  .feature-grid,
+  .metrics-grid,
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wave-pattern {
+    background-size: 800px 60px;
+  }
+}
+
+/* ==============================
+   💼 Header (Optional Global Tweaks)
+   ============================== */
+
+header.scrolled {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(8px);
+}
+
+/* ==============================
+   📊 Section Titles
+   ============================== */
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+/* ==============================
+   🌟 Cards
+   ============================== */
+
+.card {
+  background: #FFFFFF;
+  border-radius: 0.75rem;
+  border: 1px solid #E6F1EE;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* ==============================
+   🌀 Animation on Scroll Elements
+   ============================== */
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==============================
+   🧩 Accessibility Tweaks
+   ============================== */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #22C55E;
+  outline-offset: 3px;
+}

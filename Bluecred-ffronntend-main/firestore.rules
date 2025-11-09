@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user owns the document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Users collection - users can only read/write their own data
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+      
+      // User profile data
+      match /profile/{profileId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+    
+    // Carbon Credits collection
+    match /carbonCredits/{creditId} {
+      // Anyone can read (public registry)
+      allow read: if true;
+      
+      // Only authenticated users can create
+      allow create: if isAuthenticated();
+      
+      // Only the creator can update/delete
+      allow update, delete: if isAuthenticated() && 
+        resource.data.createdBy == request.auth.uid;
+    }
+    
+    // Projects collection
+    match /projects/{projectId} {
+      // Anyone can read (public registry)
+      allow read: if true;
+      
+      // Only authenticated users can create
+      allow create: if isAuthenticated();
+      
+      // Only the creator can update/delete
+      allow update, delete: if isAuthenticated() && 
+        resource.data.createdBy == request.auth.uid;
+    }
+    
+    // User sessions (for tracking login history)
+    match /sessions/{sessionId} {
+      allow read, write: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid;
+    }
+    
+    // Default: Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

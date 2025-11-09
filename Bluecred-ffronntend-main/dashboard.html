@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueCred | Dashboard</title>
+
+  <!-- TailwindCSS & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="bg-gradient-to-b from-[#E0F8FF] via-[#E4FFEF] to-white font-poppins fade-in">
+
+  <!-- Navbar -->
+  <custom-navbar></custom-navbar>
+
+  <!-- Main Content -->
+  <main class="py-12">
+    <div class="container mx-auto max-w-7xl px-4">
+
+      <!-- Dashboard Header -->
+      <div class="text-center mb-12 fade-in delay-100">
+        <h1 class="text-3xl font-bold text-dark mb-2">Analytics Dashboard</h1>
+        <p class="text-secondary-text max-w-2xl mx-auto">
+          Real-time insights, progress, and blue carbon performance metrics at a glance.
+        </p>
+      </div>
+
+      <!-- Analytics Panels -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+        <!-- Emissions & Absorption Trends -->
+        <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg hover-glow transition-all">
+          <h3 class="font-semibold text-dark mb-4">Emissions vs Absorption Trend</h3>
+          <div class="h-64 bg-[#F8FAFC] rounded-lg flex items-center justify-center relative overflow-hidden">
+            <svg width="100%" height="100%" viewBox="0 0 500 200" preserveAspectRatio="none" class="absolute bottom-0 left-0">
+              <path d="M0,150 C100,80 200,120 300,60 C400,20 500,100 500,100" stroke="#2563EB" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M0,160 C100,130 200,150 300,100 C400,60 500,120 500,120" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </svg>
+            <p class="text-xs text-secondary-text absolute bottom-2 right-4">BlueCred Analytics AI</p>
+          </div>
+        </div>
+
+        <!-- Goal Progress -->
+        <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg hover-glow transition-all">
+          <h3 class="font-semibold text-dark mb-4">Goal Progress</h3>
+          <div class="grid grid-cols-3 gap-4 text-center">
+            
+            <!-- Reduction -->
+            <div>
+              <div class="relative w-16 h-16 mx-auto mb-2 gradient-ring">
+                <svg class="w-full h-full" viewBox="0 0 36 36">
+                  <circle cx="18" cy="18" r="16" fill="none" stroke="#E5E7EB" stroke-width="2"></circle>
+                  <circle cx="18" cy="18" r="16" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="38" stroke-linecap="round" transform="rotate(-90 18 18)"></circle>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center font-bold text-dark">62%</div>
+              </div>
+              <p class="text-xs text-dark font-medium">On Track</p>
+              <p class="text-xs text-secondary-text">Reduction Target</p>
+            </div>
+
+            <!-- Absorption -->
+            <div>
+              <div class="relative w-16 h-16 mx-auto mb-2 gradient-ring">
+                <svg class="w-full h-full" viewBox="0 0 36 36">
+                  <circle cx="18" cy="18" r="16" fill="none" stroke="#E5E7EB" stroke-width="2"></circle>
+                  <circle cx="18" cy="18" r="16" fill="none" stroke="#22C55E" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="22" stroke-linecap="round" transform="rotate(-90 18 18)"></circle>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center font-bold text-dark">78%</div>
+              </div>
+              <p class="text-xs text-dark font-medium">Ahead</p>
+              <p class="text-xs text-secondary-text">Absorption Goal</p>
+            </div>
+
+            <!-- Offsets -->
+            <div>
+              <div class="relative w-16 h-16 mx-auto mb-2 gradient-ring">
+                <svg class="w-full h-full" viewBox="0 0 36 36">
+                  <circle cx="18" cy="18" r="16" fill="none" stroke="#E5E7EB" stroke-width="2"></circle>
+                  <circle cx="18" cy="18" r="16" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="56" stroke-linecap="round" transform="rotate(-90 18 18)"></circle>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center font-bold text-dark">44%</div>
+              </div>
+              <p class="text-xs text-dark font-medium">Growing</p>
+              <p class="text-xs text-secondary-text">Offsets Applied</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 fade-in delay-200">
+        <div class="bg-white rounded-xl p-5 border border-secondary-softborder flex items-center">
+          <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mr-3">
+            <i data-feather="cloud-rain" class="text-primary-blue"></i>
+          </div>
+          <div>
+            <p class="text-xs text-secondary-text">Total Emissions</p>
+            <p class="font-bold text-dark">124,560 tCO₂e</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-secondary-softborder flex items-center">
+          <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center mr-3">
+            <i data-feather="tree" class="text-primary-green"></i>
+          </div>
+          <div>
+            <p class="text-xs text-secondary-text">Blue Carbon Absorption</p>
+            <p class="font-bold text-dark">98,240 tCO₂e</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-secondary-softborder flex items-center">
+          <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mr-3">
+            <i data-feather="alert-triangle" class="text-red-500"></i>
+          </div>
+          <div>
+            <p class="text-xs text-secondary-text">Net Pollution</p>
+            <p class="font-bold text-dark">26,320 tCO₂e</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-secondary-softborder flex items-center">
+          <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center mr-3">
+            <i data-feather="trending-up" class="text-purple-500"></i>
+          </div>
+          <div>
+            <p class="text-xs text-secondary-text">Blue Yield (YoY)</p>
+            <p class="font-bold text-dark">+12.4%</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <custom-footer></custom-footer>
+
+  <!-- Scripts -->
+  <script src="navbar.js"></script>
+  <script src="footer.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("loaded");
+      feather.replace();
+      const header = document.querySelector("header");
+      window.addEventListener("scroll", () => {
+        header.classList.toggle("scrolled", window.scrollY > 20);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueCred | Login / Sign Up</title>
+
+  <!-- Tailwind + Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .text-dark { color: #0F2C3D; }
+    .text-primary-blue { color: #2563EB; }
+    .text-primary-green { color: #22C55E; }
+    .text-secondary-text { color: #6B7280; }
+    .border-secondary-softborder { border-color: #E6F1EE; }
+    .bg-primary-blue { background-color: #2563EB; }
+    .bg-primary-green { background-color: #22C55E; }
+    
+    .auth-container {
+      min-height: calc(100vh - 200px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-card {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .auth-toggle {
+      display: flex;
+      background: #F8FAFC;
+      border-bottom: 2px solid #E6F1EE;
+    }
+
+    .auth-toggle button {
+      flex: 1;
+      padding: 1rem;
+      background: transparent;
+      border: none;
+      font-weight: 600;
+      color: #6B7280;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .auth-toggle button.active {
+      color: #0F2C3D;
+      background: white;
+    }
+
+    .auth-toggle button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, #2563EB, #22C55E);
+      border-radius: 3px 3px 0 0;
+    }
+
+    .form-container {
+      padding: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #0F2C3D;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #E6F1EE;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      background: #F8FAFC;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2563EB;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-input.error {
+      border-color: #EF4444;
+    }
+
+    .error-message {
+      color: #EF4444;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #6B7280;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    .password-toggle:hover {
+      color: #2563EB;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 0.875rem;
+      background: linear-gradient(to right, #2563EB, #22C55E);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: #6B7280;
+      font-size: 0.875rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #E6F1EE;
+    }
+
+    .divider span {
+      padding: 0 1rem;
+    }
+
+    .social-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .btn-social {
+      padding: 0.75rem;
+      border: 2px solid #E6F1EE;
+      border-radius: 0.75rem;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #0F2C3D;
+    }
+
+    .btn-social:hover {
+      border-color: #2563EB;
+      background: #F8FAFC;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: #6B7280;
+    }
+
+    .form-footer a {
+      color: #2563EB;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .success-message {
+      background: linear-gradient(to right, #DCFCE7, #BBF7D0);
+      border: 1px solid #22C55E;
+      color: #166534;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1.5rem;
+      }
+
+      .social-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-[#E0F8FF] via-[#E4FFEF] to-white font-poppins">
+  
+  <!-- Navbar -->
+  <custom-navbar></custom-navbar>
+
+  <!-- Auth Container -->
+  <div class="auth-container py-12 px-4">
+    <div class="auth-card fade-in">
+      
+      <!-- Toggle Buttons -->
+      <div class="auth-toggle">
+        <button id="loginTab" class="active" onclick="switchTab('login')">
+          <i data-feather="log-in" class="inline w-4 h-4 mr-2"></i>
+          Login
+        </button>
+        <button id="signupTab" onclick="switchTab('signup')">
+          <i data-feather="user-plus" class="inline w-4 h-4 mr-2"></i>
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Success Message -->
+      <div id="successMessage" class="success-message">
+        <div class="flex items-center gap-2">
+          <i data-feather="check-circle" class="w-5 h-5"></i>
+          <span id="successText"></span>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <div id="loginForm" class="form-container">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-bold text-dark mb-2">Welcome Back</h2>
+          <p class="text-secondary-text">Sign in to access the BlueCred Carbon Registry</p>
+        </div>
+
+        <form id="loginFormElement" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">
+              <i data-feather="mail" class="inline w-4 h-4 mr-1"></i>
+              Email Address
+            </label>
+            <input 
+              type="email" 
+              id="loginEmail" 
+              class="form-input" 
+              placeholder="your.email@example.com"
+              required
+            />
+            <div class="error-message" id="loginEmailError"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">
+              <i data-feather="lock" class="inline w-4 h-4 mr-1"></i>
+              Password
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="password" 
+                id="loginPassword" 
+                class="form-input" 
+                placeholder="Enter your password"
+                required
+              />
+              <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                <i data-feather="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="error-message" id="loginPasswordError"></div>
+          </div>
+
+          <div class="flex items-center justify-between mb-6">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" class="rounded border-secondary-softborder" />
+              <span class="text-sm text-secondary-text">Remember me</span>
+            </label>
+            <a href="#" class="text-sm text-primary-blue hover:underline">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-primary" id="loginBtn">
+            <i data-feather="log-in" class="inline w-4 h-4 mr-2"></i>
+            Sign In
+          </button>
+        </form>
+
+        <div class="divider">
+          <span>Or continue with</span>
+        </div>
+
+        <div class="social-buttons">
+          <button type="button" class="btn-social" onclick="socialLogin('google')">
+            <i data-feather="chrome" class="w-4 h-4"></i>
+            Google
+          </button>
+          <button type="button" class="btn-social" onclick="socialLogin('github')">
+            <i data-feather="github" class="w-4 h-4"></i>
+            GitHub
+          </button>
+          <button type="button" class="btn-social" onclick="socialLogin('linkedin')">
+            <i data-feather="linkedin" class="w-4 h-4"></i>
+            LinkedIn
+          </button>
+        </div>
+
+        <div class="form-footer">
+          Don't have an account? <a href="#" onclick="switchTab('signup'); return false;">Sign up here</a>
+        </div>
+      </div>
+
+      <!-- Sign Up Form / Contact Info (for industry users) -->
+      <div id="signupForm" class="form-container" style="display: none;">
+        <!-- Industry Contact Info (shown when accessed from industry flow) -->
+        <div id="industryContactInfo" style="display: none;">
+          <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-[#2563EB] to-[#22C55E] rounded-full flex items-center justify-center mx-auto mb-4">
+              <i data-feather="mail" class="w-8 h-8 text-white"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-dark mb-2">Industry Account Registration</h2>
+            <p class="text-secondary-text mb-6">To create an industry account and add carbon data, please contact the BlueCred team</p>
+          </div>
+
+          <div class="bg-gradient-to-r from-[#E0F2FF] to-[#E4FFEF] rounded-xl p-6 mb-6">
+            <h3 class="font-semibold text-dark mb-4 flex items-center gap-2">
+              <i data-feather="phone" class="w-5 h-5 text-primary-blue"></i>
+              Contact Information
+            </h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <i data-feather="mail" class="w-5 h-5 text-primary-green"></i>
+                <div>
+                  <p class="text-sm text-secondary-text">Email</p>
+                  <a href="mailto:contact@bluecred.io" class="text-dark font-semibold hover:text-primary-blue transition">contact@bluecred.io</a>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-feather="phone" class="w-5 h-5 text-primary-green"></i>
+                <div>
+                  <p class="text-sm text-secondary-text">Phone</p>
+                  <a href="tel:+1234567890" class="text-dark font-semibold hover:text-primary-blue transition">+1 (234) 567-890</a>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-feather="message-circle" class="w-5 h-5 text-primary-green"></i>
+                <div>
+                  <p class="text-sm text-secondary-text">Support</p>
+                  <a href="mailto:support@bluecred.io" class="text-dark font-semibold hover:text-primary-blue transition">support@bluecred.io</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border-2 border-[#E6F1EE] rounded-xl p-5 mb-6">
+            <h3 class="font-semibold text-dark mb-3">What to Include in Your Request:</h3>
+            <ul class="space-y-2 text-sm text-secondary-text">
+              <li class="flex items-start gap-2">
+                <i data-feather="check" class="w-4 h-4 text-primary-green mt-0.5 flex-shrink-0"></i>
+                <span>Company name and industry type</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-feather="check" class="w-4 h-4 text-primary-green mt-0.5 flex-shrink-0"></i>
+                <span>Contact person details</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-feather="check" class="w-4 h-4 text-primary-green mt-0.5 flex-shrink-0"></i>
+                <span>Expected carbon data volume</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-feather="check" class="w-4 h-4 text-primary-green mt-0.5 flex-shrink-0"></i>
+                <span>Business registration details</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="text-center">
+            <a href="mailto:contact@bluecred.io?subject=Industry Account Registration Request" 
+               class="inline-flex items-center gap-2 bg-gradient-to-r from-[#2563EB] to-[#22C55E] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+              <i data-feather="send" class="w-5 h-5"></i>
+              Contact BlueCred Team
+            </a>
+          </div>
+
+          <div class="form-footer mt-6">
+            Already have an account? <a href="#" onclick="switchTab('login'); return false;">Sign in here</a>
+          </div>
+        </div>
+
+        <!-- Regular Signup Form (shown for non-industry users) -->
+        <div id="regularSignupForm">
+          <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-dark mb-2">Create Account</h2>
+            <p class="text-secondary-text">Join BlueCred to start your carbon neutral journey</p>
+          </div>
+
+          <form id="signupFormElement" onsubmit="handleSignup(event)">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="form-group">
+              <label class="form-label" for="signupFirstName">
+                <i data-feather="user" class="inline w-4 h-4 mr-1"></i>
+                First Name
+              </label>
+              <input 
+                type="text" 
+                id="signupFirstName" 
+                class="form-input" 
+                placeholder="John"
+                required
+              />
+              <div class="error-message" id="signupFirstNameError"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signupLastName">
+                <i data-feather="user" class="inline w-4 h-4 mr-1"></i>
+                Last Name
+              </label>
+              <input 
+                type="text" 
+                id="signupLastName" 
+                class="form-input" 
+                placeholder="Doe"
+                required
+              />
+              <div class="error-message" id="signupLastNameError"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signupEmail">
+              <i data-feather="mail" class="inline w-4 h-4 mr-1"></i>
+              Email Address
+            </label>
+            <input 
+              type="email" 
+              id="signupEmail" 
+              class="form-input" 
+              placeholder="john.doe@example.com"
+              required
+            />
+            <div class="error-message" id="signupEmailError"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signupCompany">
+              <i data-feather="briefcase" class="inline w-4 h-4 mr-1"></i>
+              Company Name (Optional)
+            </label>
+            <input 
+              type="text" 
+              id="signupCompany" 
+              class="form-input" 
+              placeholder="Your Company Inc."
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signupPassword">
+              <i data-feather="lock" class="inline w-4 h-4 mr-1"></i>
+              Password
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="password" 
+                id="signupPassword" 
+                class="form-input" 
+                placeholder="Create a strong password"
+                required
+                minlength="8"
+              />
+              <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
+                <i data-feather="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="error-message" id="signupPasswordError"></div>
+            <p class="text-xs text-secondary-text mt-1">
+              Must be at least 8 characters with uppercase, lowercase, and numbers
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signupConfirmPassword">
+              <i data-feather="lock" class="inline w-4 h-4 mr-1"></i>
+              Confirm Password
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="password" 
+                id="signupConfirmPassword" 
+                class="form-input" 
+                placeholder="Confirm your password"
+                required
+              />
+              <button type="button" class="password-toggle" onclick="togglePassword('signupConfirmPassword')">
+                <i data-feather="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="error-message" id="signupConfirmPasswordError"></div>
+          </div>
+
+          <div class="mb-6">
+            <label class="flex items-start gap-2 cursor-pointer">
+              <input type="checkbox" class="mt-1 rounded border-secondary-softborder" required />
+              <span class="text-sm text-secondary-text">
+                I agree to the <a href="#" class="text-primary-blue hover:underline">Terms of Service</a> 
+                and <a href="#" class="text-primary-blue hover:underline">Privacy Policy</a>
+              </span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary" id="signupBtn">
+            <i data-feather="user-plus" class="inline w-4 h-4 mr-2"></i>
+            Create Account
+          </button>
+        </form>
+
+        <div class="divider">
+          <span>Or sign up with</span>
+        </div>
+
+        <div class="social-buttons">
+          <button type="button" class="btn-social" onclick="socialSignup('google')">
+            <i data-feather="chrome" class="w-4 h-4"></i>
+            Google
+          </button>
+          <button type="button" class="btn-social" onclick="socialSignup('github')">
+            <i data-feather="github" class="w-4 h-4"></i>
+            GitHub
+          </button>
+          <button type="button" class="btn-social" onclick="socialSignup('linkedin')">
+            <i data-feather="linkedin" class="w-4 h-4"></i>
+            LinkedIn
+          </button>
+        </div>
+
+          <div class="form-footer">
+            Already have an account? <a href="#" onclick="switchTab('login'); return false;">Sign in here</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <custom-footer></custom-footer>
+
+  <!-- Scripts -->
+  <!-- Firebase SDK (Compat version for easier vanilla JS usage) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  
+  <!-- Firebase Configuration -->
+  <script src="firebase-config.js"></script>
+  
+  <!-- Custom Scripts -->
+  <script src="navbar.js"></script>
+  <script src="footer.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("loaded");
+      feather.replace();
+      
+      // Check if accessed from industry flow
+      const urlParams = new URLSearchParams(window.location.search);
+      const type = urlParams.get('type');
+      const registryType = localStorage.getItem('bluecred_registry_type');
+      
+      // If accessed from industry flow, show contact info instead of signup form
+      if (type === 'industry' || registryType === 'industry') {
+        const industryContactInfo = document.getElementById('industryContactInfo');
+        const regularSignupForm = document.getElementById('regularSignupForm');
+        
+        if (industryContactInfo && regularSignupForm) {
+          industryContactInfo.style.display = 'block';
+          regularSignupForm.style.display = 'none';
+        }
+      }
+      
+      // Replace icons after content is shown
+      setTimeout(() => feather.replace(), 100);
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueCred | Carbon Registry</title>
+
+  <!-- Tailwind + Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="bg-gradient-to-b from-[#E0F8FF] via-[#E4FFEF] to-white font-poppins fade-in">
+
+  <!-- Navbar -->
+  <custom-navbar></custom-navbar>
+
+  <!-- Registry Main Section -->
+  <main class="py-10">
+    <div class="container mx-auto max-w-7xl px-4">
+
+      <!-- Header -->
+      <div class="text-center mb-10 fade-in delay-100">
+        <h1 class="text-3xl font-bold text-dark mb-2">BlueCred Carbon Registry</h1>
+        <p class="text-secondary-text max-w-xl mx-auto">
+          Verified blue carbon projects & transparent credit marketplace for industries committed to sustainability.
+        </p>
+      </div>
+
+      <!-- User Role Selection -->
+      <div class="text-center mb-10 fade-in delay-100">
+        <h2 class="text-2xl font-bold text-dark mb-4">How would you like to access the registry?</h2>
+        <p class="text-secondary-text max-w-xl mx-auto mb-8">
+          Choose your role to proceed. Users can explore projects, while Industries can manage their carbon credits and projects.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-6">
+          <!-- View as User Card -->
+          <div id="user-selection-card" class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all hover-glow cursor-pointer w-full sm:w-80 border-2 border-transparent hover:border-primary-blue">
+            <div class="h-20 w-20 bg-blue-50 text-primary-blue rounded-full flex items-center justify-center mx-auto mb-4">
+              <i data-feather="user" class="w-10 h-10"></i>
+            </div>
+            <h3 class="font-semibold text-xl text-dark mb-2">View as User</h3>
+            <p class="text-secondary-text text-sm mb-6">Explore projects and analytics without needing to log in.</p>
+            <button class="btn-primary w-full">Continue as User</button>
+          </div>
+
+          <!-- View as Industry Card -->
+          <div id="industry-selection-card" class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all hover-glow cursor-pointer w-full sm:w-80 border-2 border-transparent hover:border-primary-blue">
+            <div class="h-20 w-20 bg-green-50 text-primary-green rounded-full flex items-center justify-center mx-auto mb-4">
+              <i data-feather="briefcase" class="w-10 h-10"></i>
+            </div>
+            <h3 class="font-semibold text-xl text-dark mb-2">View as Industry</h3>
+            <p class="text-secondary-text text-sm mb-6">Manage projects, transactions, and account details. Login required.</p>
+            <button class="btn-outline w-full">Continue as Industry</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search + Filter -->
+      <div class="bg-white rounded-xl p-5 mb-10 shadow-sm flex flex-wrap items-center gap-4 fade-in delay-200">
+        <div class="relative flex-grow">
+          <i data-feather="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-text"></i>
+          <input type="text" placeholder="Search projects..."
+                 class="w-full pl-10 pr-4 py-2 border border-secondary-softborder rounded-lg focus:ring-2 focus:ring-primary-blue" />
+        </div>
+        <div class="flex items-center gap-4">
+          <select class="bg-white border border-secondary-softborder rounded-lg px-3 py-2 text-sm">
+            <option>All Project Types</option>
+            <option>Mangroves</option>
+            <option>Seagrass</option>
+            <option>Salt Marshes</option>
+          </select>
+          <select class="bg-white border border-secondary-softborder rounded-lg px-3 py-2 text-sm">
+            <option>All Verification Status</option>
+            <option>Verified</option>
+            <option>Pending</option>
+            <option>Draft</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Project Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 fade-in delay-300">
+
+        <!-- Example Project -->
+        <div class="bg-white rounded-xl p-5 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all hover-glow">
+          <div class="h-40 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg mb-4 flex items-center justify-center">
+            <i data-feather="map" class="w-12 h-12 text-primary-blue"></i>
+          </div>
+          <h3 class="font-semibold text-dark mb-2">Bali Mangrove Restoration</h3>
+          <p class="text-xs text-secondary-text mb-4">
+            Restoring 250 ha of mangrove forests in Bali’s coastal zones to enhance blue-carbon sequestration.
+          </p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-xs text-secondary-text">Carbon Credits</p>
+              <p class="font-bold text-dark">12,450 tCO₂e</p>
+            </div>
+            <span class="bg-[#DFF8F0] px-2 py-1 rounded-full text-xs text-primary-green font-medium">Verified</span>
+          </div>
+        </div>
+
+        <!-- Duplicate for demo -->
+        <div class="bg-white rounded-xl p-5 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all hover-glow">
+          <div class="h-40 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg mb-4 flex items-center justify-center">
+            <i data-feather="droplet" class="w-12 h-12 text-primary-blue"></i>
+          </div>
+          <h3 class="font-semibold text-dark mb-2">Goa Seagrass Protection</h3>
+          <p class="text-xs text-secondary-text mb-4">
+            Conserving 180 ha of seagrass meadows for biodiversity and carbon storage.
+          </p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-xs text-secondary-text">Carbon Credits</p>
+              <p class="font-bold text-dark">8,920 tCO₂e</p>
+            </div>
+            <span class="bg-[#FFF5E5] px-2 py-1 rounded-full text-xs text-amber-600 font-medium">Pending</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all hover-glow">
+          <div class="h-40 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg mb-4 flex items-center justify-center">
+            <i data-feather="anchor" class="w-12 h-12 text-primary-blue"></i>
+          </div>
+          <h3 class="font-semibold text-dark mb-2">Andaman Coastal Marsh Revival</h3>
+          <p class="text-xs text-secondary-text mb-4">
+            400 ha salt-marsh rehabilitation improving resilience and blue-carbon yield.
+          </p>
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-xs text-secondary-text">Carbon Credits</p>
+              <p class="font-bold text-dark">15,600 tCO₂e</p>
+            </div>
+            <span class="bg-[#E0ECFF] px-2 py-1 rounded-full text-xs text-blue-700 font-medium">Draft</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="bg-white rounded-xl p-6 shadow-sm mb-10 fade-in">
+        <h3 class="font-semibold text-dark mb-4">Registry Overview</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 text-center gap-4">
+          <div>
+            <p class="text-2xl font-bold text-dark mb-1">87</p>
+            <p class="text-xs text-secondary-text">Total Projects</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-dark mb-1">64</p>
+            <p class="text-xs text-secondary-text">Verified Projects</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-dark mb-1">1.2 M</p>
+            <p class="text-xs text-secondary-text">tCO₂e Available</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-dark mb-1">$42.5 M</p>
+            <p class="text-xs text-secondary-text">Credits Transacted</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <custom-footer></custom-footer>
+
+  <!-- Scripts -->
+  <!-- Firebase SDK (for auth check) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  
+  <script src="navbar.js"></script>
+  <script src="footer.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const userSelectionCard = document.getElementById('user-selection-card');
+      const industrySelectionCard = document.getElementById('industry-selection-card');
+
+      userSelectionCard.addEventListener('click', () => {
+        localStorage.setItem('bluecred_registry_type', 'analyze');
+        window.location.href = 'registry.html';
+      });
+
+      industrySelectionCard.addEventListener('click', () => {
+        localStorage.setItem('bluecred_registry_type', 'industry');
+        window.location.href = 'registry.html';
+      });
+
+      feather.replace();
+    });
+  </script>
+</body>
+</html>

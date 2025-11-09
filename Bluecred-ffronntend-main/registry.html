@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueCred | Carbon Registry</title>
+
+  <!-- Tailwind + Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="bg-gradient-to-b from-[#E0F8FF] via-[#E4FFEF] to-white font-poppins fade-in">
+
+  <!-- Navbar -->
+  <custom-navbar></custom-navbar>
+
+  <main class="py-16">
+    <div class="container mx-auto max-w-4xl px-4 text-center">
+      <div id="analyze-header" class="hidden">
+        <h1 class="text-3xl font-bold text-dark mb-4">Public Carbon Registry</h1>
+        <p class="text-secondary-text mb-6">Explore verified blue carbon projects and market insights.</p>
+      </div>
+      <div id="industry-header" class="hidden">
+        <h1 class="text-3xl font-bold text-dark mb-4">Industry Dashboard</h1>
+        <p class="text-secondary-text mb-6">Manage your carbon credits and projects.</p>
+      </div>
+
+      <div id="registry-content" class="bg-white rounded-xl p-6 shadow-sm">
+        <div id="analyze-content" class="hidden">
+          <!-- Dummy Data for Analyze Users -->
+          <h2 class="text-2xl font-semibold text-dark mb-4">Featured Projects</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            <div class="p-4 border rounded-lg">
+              <h3 class="font-semibold text-lg">Ocean Blue Initiative</h3>
+              <p class="text-sm text-secondary-text">Mangrove restoration in Southeast Asia.</p>
+              <p class="text-sm font-bold mt-2">Carbon Sequestration: 50,000 tCO₂e</p>
+              <p class="text-sm">Status: Verified</p>
+            </div>
+            <div class="p-4 border rounded-lg">
+              <h3 class="font-semibold text-lg">Coastal Guardian Project</h3>
+              <p class="text-sm text-secondary-text">Seagrass protection off the African coast.</p>
+              <p class="text-sm font-bold mt-2">Carbon Sequestration: 30,000 tCO₂e</p>
+              <p class="text-sm">Status: Pending Verification</p>
+            </div>
+          </div>
+          <div class="mt-8">
+            <h2 class="text-2xl font-semibold text-dark mb-4">Market Analysis</h2>
+            <p class="text-secondary-text">Global average price for blue carbon credits: $25/tCO₂e</p>
+            <p class="text-secondary-text">Total credits transacted this quarter: 2.5 Million tCO₂e</p>
+            <!-- Placeholder for a simple graph -->
+            <div class="bg-gray-100 h-40 flex items-center justify-center mt-4 rounded-lg">
+              <p class="text-gray-500">[Graph Placeholder: Carbon Credit Price Trend]</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="industry-content" class="hidden">
+          <!-- Dummy Data for Industry Users -->
+          <h2 class="text-2xl font-semibold text-dark mb-4">Your Carbon Projects</h2>
+          <p class="text-secondary-text mb-6">Overview of your active and pending blue carbon projects.</p>
+          <button class="btn-primary mb-8">Add New Carbon Data</button>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            <div class="p-4 border rounded-lg">
+              <h3 class="font-semibold text-lg">My Project Alpha</h3>
+              <p class="text-sm text-secondary-text">Reforestation in coastal regions.</p>
+              <p class="text-sm font-bold mt-2">Credits Issued: 10,000 tCO₂e</p>
+              <p class="text-sm">Verification: Verified</p>
+            </div>
+            <div class="p-4 border rounded-lg">
+              <h3 class="font-semibold text-lg">My Project Beta</h3>
+              <p class="text-sm text-secondary-text">Ocean farming for carbon capture.</p>
+              <p class="text-sm font-bold mt-2">Credits Issued: 7,500 tCO₂e</p>
+              <p class="text-sm">Verification: Pending</p>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <h2 class="text-2xl font-semibold text-dark mb-4">Your Carbon Footprint Analysis</h2>
+            <p class="text-secondary-text mb-6">Detailed analysis of your carbon emissions and offsets.</p>
+            <!-- Placeholder for a more complex graph -->
+            <div class="bg-gray-100 h-60 flex items-center justify-center mt-4 rounded-lg">
+              <p class="text-gray-500">[Graph Placeholder: Industry-Specific Carbon Analysis]</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <a id="backToSelection" class="inline-block px-4 py-2 bg-primary-blue text-white rounded-lg hover:opacity-90" href="registry-selection.html">Back to Registry Selection</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <custom-footer></custom-footer>
+
+  <!-- Firebase SDK (for auth check) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script src="navbar.js"></script>
+  <script src="footer.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const registryType = localStorage.getItem('bluecred_registry_type');
+      const titleElement = document.querySelector('title');
+
+      const analyzeHeader = document.getElementById('analyze-header');
+      const industryHeader = document.getElementById('industry-header');
+      const analyzeContent = document.getElementById('analyze-content');
+      const industryContent = document.getElementById('industry-content');
+
+      if (registryType === 'analyze') {
+        titleElement.textContent = 'BlueCred | Public Registry';
+        analyzeHeader.classList.remove('hidden');
+        analyzeContent.classList.remove('hidden');
+        document.body.classList.add('loaded');
+        feather.replace();
+      } else if (registryType === 'industry') {
+        titleElement.textContent = 'BlueCred | Industry Dashboard';
+        industryHeader.classList.remove('hidden');
+        // Authentication for industry users
+        if (typeof firebase !== 'undefined') {
+          try {
+            const config = window.firebaseConfig || firebaseConfig;
+            if (config && config.apiKey && config.apiKey !== 'YOUR_API_KEY_HERE') {
+              if (!firebase.apps.length) {
+                firebase.initializeApp(config);
+              }
+              const auth = firebase.auth();
+              auth.onAuthStateChanged(user => {
+                if (!user) {
+                  window.location.href = 'auth.html?type=industry';
+                  return;
+                }
+                industryContent.classList.remove('hidden');
+                document.body.classList.add('loaded');
+                feather.replace();
+                // Display user info (can be expanded later)
+                // const userInfo = document.getElementById('userInfo');
+                // userInfo.textContent = `Signed in as: ${user.email}`;
+              });
+              return;
+            }
+          } catch (e) {
+            console.warn('Firebase check failed, falling back to localStorage:', e);
+          }
+        }
+        // Fallback or if Firebase not configured
+        const localUser = localStorage.getItem('bluecred_current_user');
+        if (!localUser) {
+          window.location.href = 'auth.html?type=industry';
+          return;
+        }
+        industryContent.classList.remove('hidden');
+        document.body.classList.add('loaded');
+        feather.replace();
+      } else {
+        // If registryType is not set, redirect to selection page
+        window.location.href = 'registry-selection.html';
+      }
+    });
+  </script>
+</body>
+</html>
